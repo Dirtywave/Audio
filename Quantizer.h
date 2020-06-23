@@ -1,5 +1,5 @@
 /* Audio Library for Teensy 3.X
- * Copyright (c) 2014, Paul Stoffregen, paul@pjrc.com
+ * Copyright (c) 2019, Paul Stoffregen, paul@pjrc.com
  *
  * Development of this audio library was funded by PJRC.COM, LLC by sales of
  * Teensy and Audio Adaptor boards.  Please support PJRC's efforts to develop
@@ -23,30 +23,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-#ifndef input_adc_h_
-#define input_adc_h_
+/*
+ by Alexander Walch
+ */
+#ifndef quantizer_h_
+#define quantizer_h_
 
 #include "Arduino.h"
-#include "AudioStream.h"
-#include "DMAChannel.h"
 
-class AudioInputAnalog : public AudioStream
-{
+//#define DEBUG_QUANTIZER
+
+#define NOISE_SHAPE_F_LENGTH 9  //order of filter is 10, but the first coefficient equals 1 and doesn't need to be stored
+
+class Quantizer {
 public:
-        AudioInputAnalog() : AudioStream(0, NULL) { init(A2); }
-        AudioInputAnalog(uint8_t pin) : AudioStream(0, NULL) { init(pin); }
-        virtual void update(void);
+    ///@param audio_sample_rate currently only 44.1kHz and 48kHz are supported
+    Quantizer(float audio_sample_rate);
+    void configure(bool noiseShaping, bool dither, float factor);
+    void quantize(float* input, int16_t* output, uint16_t length);
+    //attention outputInterleaved must have length 2*length
+    void quantize(float* input0, float* input1, int32_t* outputInterleaved, uint16_t length);
+    void reset();
+        
 private:
-        static audio_block_t *block_left;
-        static uint16_t block_offset;
-        static int32_t hpf_y1;
-        static int32_t hpf_x1;
 
-        static bool update_responsibility;
-        static DMAChannel dma;
-        static void isr(void);
-        static void init(uint8_t pin);
+bool _noiseShaping=true;
+bool _dither=true;
+float _fOutputLastIt0=0.f;
+float _fOutputLastIt1=0.f;
+float _buffer0[NOISE_SHAPE_F_LENGTH];
+float _buffer1[NOISE_SHAPE_F_LENGTH];
+float* _bPtr0=_buffer0;
+float* _bufferEnd0;
+float* _bPtr1=_buffer1;
+float _noiseSFilter[NOISE_SHAPE_F_LENGTH ];
+float _factor;
 
 };
 

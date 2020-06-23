@@ -24,30 +24,19 @@
  * THE SOFTWARE.
  */
 
-#ifndef input_adc_h_
-#define input_adc_h_
+#ifndef effect_rectifier_h_
+#define effect_rectifier_h_
 
 #include "Arduino.h"
 #include "AudioStream.h"
-#include "DMAChannel.h"
 
-class AudioInputAnalog : public AudioStream
+class AudioEffectRectifier: public AudioStream
 {
 public:
-        AudioInputAnalog() : AudioStream(0, NULL) { init(A2); }
-        AudioInputAnalog(uint8_t pin) : AudioStream(0, NULL) { init(pin); }
-        virtual void update(void);
+	AudioEffectRectifier(void) : AudioStream(1, inputQueueArray) {}
+	virtual void update(void);
 private:
-        static audio_block_t *block_left;
-        static uint16_t block_offset;
-        static int32_t hpf_y1;
-        static int32_t hpf_x1;
-
-        static bool update_responsibility;
-        static DMAChannel dma;
-        static void isr(void);
-        static void init(uint8_t pin);
-
+	audio_block_t *inputQueueArray[1];
 };
 
 #endif
