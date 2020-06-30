@@ -58,13 +58,6 @@
 // include all the library headers, so a sketch can use a single
 // #include <Audio.h> to get the whole library
 //
-#include "analyze_fft256.h"
-#include "analyze_fft1024.h"
-#include "analyze_print.h"
-#include "analyze_tonedetect.h"
-#include "analyze_notefreq.h"
-#include "analyze_peak.h"
-#include "analyze_rms.h"
 #include "control_sgtl5000.h"
 #include "control_wm8731.h"
 #include "control_ak4558.h"
@@ -121,15 +114,5 @@
 #include "play_queue.h"
 #include "play_serialflash_raw.h"
 #include "record_queue.h"
-#include "synth_tonesweep.h"
-#include "synth_sine.h"
-#include "synth_waveform.h"
-#include "synth_dc.h"
-#include "synth_whitenoise.h"
-#include "synth_pinknoise.h"
-#include "synth_karplusstrong.h"
-#include "synth_simple_drum.h"
-#include "synth_pwm.h"
-#include "synth_wavetable.h"
 
 #endif
