@@ -538,6 +538,8 @@ bool AudioControlSGTL5000::enable(void)
 	write(CHIP_DAC_VOL, 0x3C3C); // digital gain, 0dB
 	write(CHIP_ANA_HP_CTRL, 0x7F7F); // set volume (lowest level)
 	write(CHIP_ANA_CTRL, 0x0036);  // enable zero cross detectors
+
+	write(CHIP_ANA_TEST2, 0b1);  // enable dithering
 	//mute = false;
 	semi_automated = true;
 	return true;
