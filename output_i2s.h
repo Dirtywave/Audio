@@ -38,6 +38,7 @@ public:
 	virtual void update(void);
 	void begin(void);
 	friend class AudioInputI2S;
+	friend class AudioInputI2SBuffered;
 #if defined(__IMXRT1062__)
 	friend class AudioOutputI2SQuad;
 	friend class AudioInputI2SQuad;

@@ -70,8 +70,6 @@
 #include "effect_flange.h"
 #include "effect_envelope.h"
 #include "effect_multiply.h"
-#include "effect_delay.h"
-#include "effect_delay_ext.h"
 #include "effect_midside.h"
 #include "effect_reverb.h"
 #include "effect_freeverb.h"
